@@ -1,0 +1,25 @@
+$kind: http-request
+url: http://localhost:3000/veiculos
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"marca\": \"BYD\",\r
+
+    \  \"modelo\": \"Dolphin mini\",\r
+
+    \  \"ano\": 2026,\r
+
+    \  \"placa\": \"DEG-6789\",\r
+
+    \  \"valor\": 250.25,\r
+
+    \  \"status\": \"disponível\"\r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: ""
+order: 17000

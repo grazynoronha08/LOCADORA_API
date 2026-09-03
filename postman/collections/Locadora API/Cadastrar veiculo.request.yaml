@@ -1,0 +1,25 @@
+$kind: http-request
+url: http://localhost:3000/veiculos
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"marca\": \"Chevrolet\",\r
+
+    \  \"modelo\": \"Onix\",\r
+
+    \  \"ano\": 2023,\r
+
+    \  \"placa\": \"XYZ-9876\",\r
+
+    \  \"valor\": 85000.00,\r
+
+    \  \"status\": \"disponível\"\r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: ""
+order: 19000

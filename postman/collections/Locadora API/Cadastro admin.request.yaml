@@ -1,0 +1,17 @@
+$kind: http-request
+url: http://localhost:3000/cadastro/administrador
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"name\": \"Grazy\",\r
+
+    \  \"age\": 20,\r
+
+    \  \"email\": \"grazy@gmail.com\",\r
+
+    \  \"password\": \"senha1\"\r
+
+    }"
+order: 2000

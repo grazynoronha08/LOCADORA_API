@@ -1,0 +1,25 @@
+$kind: http-request
+url: http://localhost:3000/veiculos
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"marca\": \"Ford\",\r
+
+    \  \"modelo\": \"Ranger\",\r
+
+    \  \"ano\": 2025,\r
+
+    \  \"placa\": \"ABC-1234\",\r
+
+    \  \"valor\": 500.50,\r
+
+    \  \"status\": \"disponível\"\r
+
+    }"
+auth:
+  type: bearer
+  credentials:
+    token: ""
+order: 18000

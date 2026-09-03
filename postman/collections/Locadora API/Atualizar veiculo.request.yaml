@@ -1,0 +1,11 @@
+$kind: http-request
+url: http://localhost:3000/atualizar/id-aqui
+method: PUT
+body:
+  type: json
+  content: "{\r\n    \"valor\": 195.99\r\n}"
+auth:
+  type: bearer
+  credentials:
+    token: ""
+order: 15000

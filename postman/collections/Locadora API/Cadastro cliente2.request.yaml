@@ -1,0 +1,17 @@
+$kind: http-request
+url: http://localhost:3000/cadastro/cliente
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"name\": \"Clara\",\r
+
+    \  \"age\": 22,\r
+
+    \  \"email\": \"clara@gmail.com\",\r
+
+    \  \"password\": \"senha3\"\r
+
+    }"
+order: 6000
