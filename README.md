@@ -1,6 +1,3 @@
-Aqui está o código completo. Basta copiar tudo que está dentro da caixa abaixo e colar no seu arquivo:
-
-```markdown
 # API de Locadora de Veículos
 
 Esta é uma API RESTful para gerenciamento de frota e sistema de aluguel de carros. O projeto foi desenvolvido com Node.js e PostgreSQL, focando em regras de negócio como controle de acesso por níveis (Administrador e Cliente), autenticação segura e atualização automática da disponibilidade dos veículos.
@@ -22,21 +19,16 @@ Certifique-se de ter o [Node.js](https://nodejs.org/) e o [PostgreSQL](https://w
 
 Clone o repositório e instale as dependências listadas no `package.json`:
 
-```bash
 git clone [https://github.com/grazynoronha08/LOCADORA_API.git](https://github.com/grazynoronha08/LOCADORA_API.git)
 cd LOCADORA_API
 
-```
-
 **Dependências:**
 
-```bash
 npm install --save sequelize
 npm install --save pg pg-hstore  
 npm install sequelize-cli --dev
 npm install bcrypt 
 
-```
 
 ### 3. Configuração do Banco de Dados
 
@@ -44,37 +36,31 @@ No seu painel do PostgreSQL crie um banco de dados em branco chamado `usersdb`.
 
 Depois, acesse o arquivo `src/config/database.js` no projeto e atualize a propriedade `password` para 8108:
 
-```javascript
   host: 'localhost',
   username: 'postgres',
   password: '8108',
   database: 'usersdb',
 
-```
 
 ### 4. Executando as Migrations
 
 Para estruturar as tabelas (`users`, `vehicles`, `rentals`) no banco de dados, rode o comando:
 
-```bash
 npx sequelize-cli db:migrate
 
-```
 
 ### 5. Iniciando o servidor
 
 Com o banco configurado, inicie a aplicação:
 
-```bash
 node --watch src/server.js
 
-```
 
 O servidor estará ativo em `http://localhost:3000`.
 
 ## Fluxo Detalhado para Testes (Postman)
 
-> **💡 Obs:** O arquivo da Collection anexado a este repositório já contém exemplos preenchidos no Body para cada uma das ações abaixo. Nas rotas protegidas, lembre-se de colar o token na aba **Authorization > Bearer Token**.
+**💡 Obs:** O arquivo da Collection anexado a este repositório já contém exemplos preenchidos no Body para cada uma das ações abaixo. Nas rotas protegidas, lembre-se de colar o token na aba **Authorization > Bearer Token**.
 
 Siga esta ordem para validar todas as regras de negócio da API:
 
@@ -119,6 +105,5 @@ Siga esta ordem para validar todas as regras de negócio da API:
 * **Listar Usuários:** Apenas Administradores podem acessar a rota `GET /usuarios/todos`.
 * **Remover Usuário:** Na rota `DELETE /usuarios/deletar/:id`, um usuário comum só pode deletar a própria conta, mas um Admin pode remover outras contas.
 
-```
 
 ```
