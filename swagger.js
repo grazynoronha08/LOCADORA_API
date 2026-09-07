@@ -10,6 +10,6 @@ const doc = {
 };
 
 const outputFile = './swagger-output.json';
-const endpointsFiles = ['./src/routes.js']; // Lendo as suas rotas automaticamente
+const endpointsFiles = ['./src/routes.js']; 
 
 swaggerAutogen()(outputFile, endpointsFiles, doc);

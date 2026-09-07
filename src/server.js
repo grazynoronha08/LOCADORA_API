@@ -14,6 +14,10 @@ const app = express();
 
 app.use(express.json());
 
+app.get('/', (req, res) => {
+    res.send('🚗 Locadora API online! Acesse /api-docs para ver a documentação.');
+});
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const sequelize = new Sequelize(config);
