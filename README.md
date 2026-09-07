@@ -2,8 +2,8 @@
 
 Esta é uma API RESTful para gerenciamento de frota e sistema de aluguel de carros. O projeto foi desenvolvido com Node.js e PostgreSQL, focando em regras de negócio como controle de acesso por níveis (Administrador e Cliente), autenticação segura e atualização automática da disponibilidade dos veículos.
 
-🌍 **Acesse a API Online:** [https://locadora-api-k59p.onrender.com](https://locadora-api-k59p.onrender.com)  
-📖 **Documentação Swagger:** [https://locadora-api-k59p.onrender.com/api-docs](https://locadora-api-k59p.onrender.com/api-docs)
+**Acesse a API Online:** [https://locadora-api-k59p.onrender.com](https://locadora-api-k59p.onrender.com)  
+**Documentação Swagger:** [https://locadora-api-k59p.onrender.com/api-docs](https://locadora-api-k59p.onrender.com/api-docs)
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -13,11 +13,11 @@ Esta é uma API RESTful para gerenciamento de frota e sistema de aluguel de carr
 * **Documentação:** Swagger
 * **Outros:** Crypto (Geração de UUIDs)
 
-## 🌐 Como testar a API na Nuvem (Recomendado)
+## Como testar a API na Nuvem (Recomendado)
 
 Acesse o link da **Documentação Swagger** acima. Por lá, você pode visualizar todas as rotas e testá-las diretamente pelo navegador, sem precisar configurar o banco de dados na sua máquina.
 
-## 💻 Como rodar o projeto localmente
+## Como rodar o projeto localmente
 
 ### 1. Pré-requisitos
 Certifique-se de ter o [Node.js](https://nodejs.org/) e o [PostgreSQL](https://www.postgresql.org/) instalados e rodando na sua máquina.
@@ -58,9 +58,9 @@ node src/server.js
 O servidor estará ativo em `http://localhost:3000`.
 
 
-## 🧪 Fluxo Detalhado para Testes (Postman)
+## Fluxo Detalhado para Testes (Postman)
 
-**💡 Obs:** O arquivo da Collection anexado a este repositório (`postman/collections/...`) já contém exemplos preenchidos no Body para cada uma das ações abaixo. Nas rotas protegidas, lembre-se de colar o token na aba **Authorization > Bearer Token**.
+** Obs:** O arquivo da Collection anexado a este repositório (`postman/collections/...`) já contém exemplos preenchidos no Body para cada uma das ações abaixo. Nas rotas protegidas, lembre-se de colar o token na aba **Authorization > Bearer Token**.
 
 Siga esta ordem para validar todas as regras de negócio da API:
 
@@ -104,5 +104,3 @@ Siga esta ordem para validar todas as regras de negócio da API:
 
 * **Listar Usuários:** Apenas Administradores podem acessar a rota `GET /usuarios/todos`.
 * **Remover Usuário:** Na rota `DELETE /usuarios/deletar/:id`, um usuário comum só pode deletar a própria conta, mas um Admin pode remover outras contas.
-
-```
