@@ -21,7 +21,7 @@ const configuracaoNuvem = {
 const ambienteAtual = process.env.DATABASE_URL ? configuracaoNuvem : configuracaoLocal;
 
 export default {
-  development: configuracaoLocal,
-  production: configuracaoNuvem,
-  ...ambienteAtual
+  development: ambienteAtual,
+  test: ambienteAtual,
+  production: ambienteAtual
 };
