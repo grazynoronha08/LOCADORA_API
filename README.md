@@ -32,10 +32,12 @@ Dependências:
 
 O comando padrão npm install já baixa todas as bibliotecas automaticamente, mas os pacotes base utilizados no projeto foram instalados com:
 
+```
 npm install --save sequelize
 npm install --save pg pg-hstore  
 npm install sequelize-cli --dev
 npm install bcrypt
+```
 
 ### 3. Configuração do Banco de Dados
 
