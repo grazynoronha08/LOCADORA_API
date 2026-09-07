@@ -5,7 +5,7 @@ Esta é uma API RESTful para gerenciamento de frota e sistema de aluguel de carr
 **Acesse a API Online:** [https://locadora-api-k59p.onrender.com](https://locadora-api-k59p.onrender.com)  
 **Documentação Swagger:** [https://locadora-api-k59p.onrender.com/api-docs](https://locadora-api-k59p.onrender.com/api-docs)
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 * **Backend:** Node.js, Express.js
 * **Banco de Dados:** PostgreSQL (Render), Sequelize (ORM)
