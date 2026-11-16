@@ -7,6 +7,10 @@ import InsuranceController from "./controllers/insuranceController.js";
 import authMiddleware from "./database/middlewares/auth.js";
 import adminMiddleware from './database/middlewares/adminMiddleware.js';
 
+const { Router } = require('express');
+const vehicleController = require('./controllers/vehicleController'); // Usa o controller que já existe
+const routes = Router();
+
 
 const router = express.Router()
 
@@ -44,3 +48,8 @@ router.get('/seguros/:identificador',  authMiddleware, InsuranceController.show)
 router.put('/seguros/:id', authMiddleware, adminMiddleware, InsuranceController.update);
 router.patch('/seguros/cancelar/:id', authMiddleware, adminMiddleware, InsuranceController.cancel);
 export default router
+
+// ROTA BUSCA
+routes.get('/vehicles/search', vehicleController.searchVehicles);
+module.exports = routes;
+
