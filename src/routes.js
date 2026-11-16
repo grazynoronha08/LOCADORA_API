@@ -23,6 +23,7 @@ router.put('/atualizar/:id', authMiddleware, adminMiddleware, VehicleController.
 router.delete('/veiculos/deletar/:id', authMiddleware, adminMiddleware, VehicleController.remove);
 router.get('/veiculos/todos', VehicleController.index);
 router.get('/buscar/:identificador', VehicleController.show);
+router.get('/veiculos/busca', VehicleController.search);
 
 // ROTAS DE ALUGUEL 
 router.post('/alugar', authMiddleware, RentalController.create);
@@ -39,8 +40,10 @@ router.delete('/pagamentos/:id', authMiddleware, adminMiddleware, PaymentControl
 
 // ROTAS DO SEGURO
 router.get('/seguro/relatorio', authMiddleware, adminMiddleware, InsuranceController.relatorio) ;
+router.get('/seguro/relatorio/tipos', authMiddleware, adminMiddleware, InsuranceController.relatorioPorTipo);
 router.post('/seguros', authMiddleware, InsuranceController.create);
 router.get('/seguros/:identificador',  authMiddleware, InsuranceController.show);
 router.put('/seguros/:id', authMiddleware, adminMiddleware, InsuranceController.update);
 router.patch('/seguros/cancelar/:id', authMiddleware, adminMiddleware, InsuranceController.cancel);
+
 export default router

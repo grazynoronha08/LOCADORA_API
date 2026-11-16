@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Painel Completo — LOCADORA_API (24 Rotas)</title>
+  <title>Painel Completo — LOCADORA_API (26 Rotas)</title>
   <style>
     :root {
       --bg: #0f172a;
@@ -231,7 +231,7 @@
   <div class="container">
     <header>
       <div class="title-area">
-        <h1>LOCADORA_API <span class="badge badge-pub">24 Rotas Integradas</span></h1>
+        <h1>LOCADORA_API <span class="badge badge-pub">26 Rotas Integradas</span></h1>
         <small style="color: var(--muted)">Painel de Testes — Usuários, Veículos, Aluguéis, Pagamentos Divididos e Seguros</small>
       </div>
       <div class="url-bar">
@@ -249,7 +249,7 @@
         Status: <strong>Não autenticado (Visitante)</strong>
       </div>
       <div class="btn-row">
-        <button class="action btn-admin" onclick="quickLogin('grazy@admin.br', '123456')">Login Admin (Grazy)</button>
+        <button class="action btn-admin" onclick="quickLogin('grazynoronha08@alu.ufc.br', '123456')">Login Admin (Grazy)</button>
         <button class="action" onclick="quickLogin('sofia@locadora.com', '123456')">Login Cliente (Sofia)</button>
         <button class="action btn-danger" onclick="logout()">Sair</button>
       </div>
@@ -257,10 +257,10 @@
 
     <div class="tabs">
       <button class="tab-btn active" onclick="openTab('tab-users', this)">1. Usuários (5)</button>
-      <button class="tab-btn" onclick="openTab('tab-vehicles', this)">2. Veículos (5)</button>
+      <button class="tab-btn" onclick="openTab('tab-vehicles', this)">2. Veículos (6)</button>
       <button class="tab-btn" onclick="openTab('tab-rentals', this)">3. Aluguéis (3)</button>
       <button class="tab-btn" onclick="openTab('tab-payments', this)">4. Pagamentos (6)</button>
-      <button class="tab-btn" onclick="openTab('tab-insurances', this)">5. Seguros (5)</button>
+      <button class="tab-btn" onclick="openTab('tab-insurances', this)">5. Seguros (6)</button>
     </div>
 
     <div class="main-grid">
@@ -273,7 +273,7 @@
               <div><span class="badge badge-pub">Público</span> <span class="endpoint-tag">POST /login</span></div>
             </div>
             <div class="form-grid">
-              <div><label>E-mail</label><input type="email" id="loginEmail" value="grazy@admin.br" /></div>
+              <div><label>E-mail</label><input type="email" id="loginEmail" value="grazynoronha08@alu.ufc.br" /></div>
               <div><label>Senha</label><input type="password" id="loginPass" value="123456" /></div>
             </div>
             <button class="action" onclick="login()">Entrar e Salvar Token JWT</button>
@@ -322,25 +322,35 @@
           </div>
         </div>
 
-        <!-- ==================== ABA 2: VEÍCULOS (5 ROTAS) ==================== -->
+        <!-- ==================== ABA 2: VEÍCULOS (6 ROTAS) ==================== -->
         <div id="tab-vehicles" class="panel">
           <div class="card">
             <div class="card-header">
-              <h3>1 e 2. Consultar Catálogo Público</h3>
+              <h3>1, 2 e 3. Consultar Catálogo Público</h3>
               <div><span class="badge badge-pub">Público</span></div>
             </div>
-            <div class="btn-row" style="margin-bottom: 12px;">
+            <div class="btn-row" style="margin-bottom: 14px;">
               <button class="action" onclick="apiRequest('GET', '/veiculos/todos')">GET /veiculos/todos</button>
             </div>
             <div class="form-grid">
-              <div><label>Buscar por ID</label><input type="number" id="searchVehicleIdent" placeholder="Ex: 1" /></div>
+              <div>
+                <label>Buscar Veículo por ID</label>
+                <input type="number" id="searchVehicleIdent" placeholder="Ex: 1" />
+              </div>
+              <div>
+                <label>Buscar por Termo (Marca/Modelo + Total Locações)</label>
+                <input type="text" id="searchVehicleTermo" placeholder="Ex: Toyota ou Corolla" />
+              </div>
             </div>
-            <button class="action btn-secondary" onclick="searchVehicle()">GET /buscar/:identificador</button>
+            <div class="btn-row">
+              <button class="action btn-secondary" onclick="searchVehicle()">GET /buscar/:identificador</button>
+              <button class="action btn-success" onclick="searchVehicleByTerm()">GET /veiculos/busca?termo=</button>
+            </div>
           </div>
 
           <div class="card">
             <div class="card-header">
-              <h3>3. Cadastrar Novo Veículo</h3>
+              <h3>4. Cadastrar Novo Veículo</h3>
               <div><span class="badge badge-admin">Admin</span> <span class="endpoint-tag">POST /veiculos</span></div>
             </div>
             <div class="form-grid">
@@ -355,7 +365,7 @@
 
           <div class="card">
             <div class="card-header">
-              <h3>4. Atualizar Veículo</h3>
+              <h3>5. Atualizar Veículo</h3>
               <div><span class="badge badge-admin">Admin</span> <span class="endpoint-tag">PUT /atualizar/:id</span></div>
             </div>
             <div class="form-grid">
@@ -371,7 +381,7 @@
 
           <div class="card">
             <div class="card-header">
-              <h3>5. Remover Veículo</h3>
+              <h3>6. Remover Veículo</h3>
               <div><span class="badge badge-admin">Admin</span> <span class="endpoint-tag">DELETE /veiculos/deletar/:id</span></div>
             </div>
             <div class="form-grid">
@@ -487,7 +497,7 @@
           </div>
         </div>
 
-        <!-- ==================== ABA 5: SEGUROS (5 ROTAS) ==================== -->
+        <!-- ==================== ABA 5: SEGUROS (6 ROTAS) ==================== -->
         <div id="tab-insurances" class="panel">
           <div class="card">
             <div class="card-header">
@@ -512,11 +522,19 @@
 
           <div class="card">
             <div class="card-header">
-              <h3>2, 3 e 4. Relatório, Consulta e Cancelamento</h3>
-              <div><span class="badge badge-admin">Relatório Admin</span> <span class="badge badge-auth">Dono/Admin</span></div>
+              <h3>2 e 3. Relatórios Gerenciais de Seguros</h3>
+              <div><span class="badge badge-admin">Admin</span></div>
             </div>
-            <div class="btn-row" style="margin-bottom: 12px;">
+            <div class="btn-row">
               <button class="action btn-admin" onclick="apiRequest('GET', '/seguro/relatorio')">GET /seguro/relatorio (COUNT Ativos)</button>
+              <button class="action btn-admin" onclick="apiRequest('GET', '/seguro/relatorio/tipos')">GET /seguro/relatorio/tipos (GROUP BY Tipo)</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3>4 e 5. Consultar ou Cancelar Seguro</h3>
+              <div><span class="badge badge-auth">GET Dono/Admin</span> <span class="badge badge-admin">PATCH Admin</span></div>
             </div>
             <div class="form-grid">
               <div><label>ID do Seguro</label><input type="number" id="sId" placeholder="Ex: 1" /></div>
@@ -529,7 +547,7 @@
 
           <div class="card">
             <div class="card-header">
-              <h3>5. Editar Apólice de Seguro</h3>
+              <h3>6. Editar Apólice de Seguro</h3>
               <div><span class="badge badge-admin">Admin</span> <span class="endpoint-tag">PUT /seguros/:id</span></div>
             </div>
             <div class="form-grid">
@@ -567,7 +585,7 @@
         <div id="resumo-box"></div>
 
         <pre id="responseOutput">{
-  "status": "Pronto para testar todas as 24 rotas",
+  "status": "Pronto para testar todas as 26 rotas",
   "dica": "Use os botões 'Login Admin (Grazy)' ou 'Login Cliente (Sofia)' no topo para autenticar automaticamente."
 }</pre>
       </div>
@@ -577,12 +595,10 @@
   <script>
     let token = localStorage.getItem('locadora_token') || '';
 
-    // Se estiver rodando direto pelo Render/localhost, usa a própria origem automaticamente
     if (window.location.origin && window.location.origin.startsWith('http')) {
       document.getElementById('baseUrl').value = window.location.origin;
     }
 
-    // Datas padrão (hoje e +3 dias)
     const today = new Date();
     const plus3 = new Date(today);
     plus3.setDate(today.getDate() + 3);
@@ -624,7 +640,7 @@
       if (payload) {
         const uid = payload.id || payload.userId || '?';
         const role = payload.is_admin === true || savedRole === 'ADMIN'
-          ? 'ADMINISTRADOR'
+          ? 'ADMINISTRADORA'
           : savedRole === 'CLIENTE'
             ? 'CLIENTE'
             : 'AUTENTICADO';
@@ -638,6 +654,7 @@
     function logout() {
       token = '';
       localStorage.removeItem('locadora_token');
+      localStorage.removeItem('locadora_role');
       updateSessionUI();
       document.getElementById('resumo-box').style.display = 'none';
       document.getElementById('reqInfo').innerText = 'Sessão encerrada';
@@ -673,14 +690,9 @@
         if (path === '/login' && res.ok && data.token) {
           token = data.token;
           localStorage.setItem('locadora_token', token);
-          if (path === '/login' && res.ok && data.token) {
-          token = data.token;
-          localStorage.setItem('locadora_token', token);
           const emailDigitado = document.getElementById('loginEmail').value;
-          const isAdmin = data.user?.is_admin ?? (emailDigitado === 'grazy@admin.br');
+          const isAdmin = data.user?.is_admin ?? (emailDigitado === 'grazynoronha08@alu.ufc.br');
           localStorage.setItem('locadora_role', isAdmin ? 'ADMIN' : 'CLIENTE');
-          updateSessionUI();
-        }
           updateSessionUI();
         }
 
@@ -750,6 +762,11 @@
     function searchVehicle() {
       const ident = encodeURIComponent(document.getElementById('searchVehicleIdent').value);
       apiRequest('GET', `/buscar/${ident}`);
+    }
+
+    function searchVehicleByTerm() {
+      const termo = encodeURIComponent(document.getElementById('searchVehicleTermo').value);
+      apiRequest('GET', `/veiculos/busca?termo=${termo}`);
     }
 
     function createVehicle() {

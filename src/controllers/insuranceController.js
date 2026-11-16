@@ -1,3 +1,4 @@
+import { QueryTypes } from 'sequelize';
 import Insurance from '../models/Insurance.js';
 import Rental from '../models/Rental.js';
 import User from '../models/User.js';
@@ -115,6 +116,30 @@ class InsuranceController {
       return res.status(200).json({ seguros_ativos: relatorio });
     } catch (error) {
       return res.status(500).json({ error: 'Erro ao gerar relatório.', details: error.message });
+    }
+  }
+
+  async relatorioPorTipo(req, res) {
+    try {
+      const relatorio = await Insurance.sequelize.query(
+        `
+        SELECT
+          tipo_seguro,
+          COUNT(*)   AS total_seguros,
+          SUM(valor) AS valor_total,
+          MIN(valor) AS menor_valor,
+          MAX(valor) AS maior_valor
+        FROM insurances
+        WHERE status = 'ativo'
+        GROUP BY tipo_seguro
+        ORDER BY valor_total DESC;
+        `,
+        { type: QueryTypes.SELECT }
+      );
+
+      return res.status(200).json(relatorio);
+    } catch (error) {
+      return res.status(500).json({ error: 'Erro ao gerar relatório por tipo.', details: error.message });
     }
   }
 }

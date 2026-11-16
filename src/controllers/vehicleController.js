@@ -1,4 +1,5 @@
 import Vehicle from '../models/Vehicle.js'; 
+import Rental from '../models/Rental.js'; 
 import { Op } from 'sequelize';
 
 class VehicleController {
@@ -17,7 +18,6 @@ class VehicleController {
         }
     }
 
-    
     async index(req, res) {
         try {
             const vehicles = await Vehicle.findAll();
@@ -47,6 +47,38 @@ class VehicleController {
             return res.status(200).json(vehicle);
         } catch (error) {
             return res.status(500).json({ error: 'Erro ao buscar veículo.' });
+        }
+    }
+
+    async search(req, res) {
+        try {
+        const { termo } = req.query; // Ex: /veiculos/busca?termo=Toyota
+
+        const vehicles = await Vehicle.findAll({
+            where: {
+            [Op.or]: [
+                { marca: { [Op.iLike]: `%${termo || ''}%` } },
+                { modelo: { [Op.iLike]: `%${termo || ''}%` } },
+            ],
+            },
+            include: [
+            {
+                model: Rental,
+                as: 'rentals',
+                attributes: [],
+            },
+            ],
+            attributes: {
+            include: [
+                [Vehicle.sequelize.fn('COUNT', Vehicle.sequelize.col('rentals.id')), 'total_locacoes'],
+            ],
+            },
+            group: ['Vehicle.id'],
+        });
+
+        return res.status(200).json(vehicles);
+        } catch (error) {
+        return res.status(500).json({ error: 'Erro ao buscar veículos.', details: error.message });
         }
     }
 
