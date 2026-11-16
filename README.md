@@ -18,9 +18,9 @@ Esta é uma API RESTful para gerenciamento de frota e sistema de aluguel de carr
 
 ## Como testar a API na Nuvem (Recomendado)
 
-Você pode testar todas as **24 rotas** diretamente pelo navegador sem precisar configurar nada na sua máquina:
+Você pode testar todas as **26 rotas** diretamente pelo navegador sem precisar configurar nada na sua máquina:
 
-1. **Pelo Painel Visual Interativo:** Acesse [https://locadora-api-k59p.onrender.com](https://locadora-api-k59p.onrender.com), utilize os botões de **Login Rápido** no topo (`grazynoronha08@alu.ufc.br` para Administradora ou `sofia@locadora.com` para Cliente — senha padrão `123456`) e navegue pelas abas para testar cada funcionalidade.
+1. **Pelo Painel Visual Interativo:** Acesse [https://locadora-api-k59p.onrender.com](https://locadora-api-k59p.onrender.com), utilize os botões de **Login Rápido** no topo (`grazy@admin.br` para Administradora ou `renan@locadora.com` para Cliente — senha padrão `123456`) e navegue pelas abas para testar cada funcionalidade.
 2. **Pelo Swagger UI:** Acesse [https://locadora-api-k59p.onrender.com/api-docs](https://locadora-api-k59p.onrender.com/api-docs), clique em **Authorize**, cole o token JWT obtido no `/login` no formato `Bearer <seu_token>` e execute os endpoints.
 
 ---
@@ -86,7 +86,10 @@ O servidor estará ativo em `http://localhost:3000` (painel web) e `http://local
 - **Ação:** Valida as credenciais e retorna um Token JWT.
 
 ### 4. Gerenciar Veículos
-- **Ver Veículos (Público):** Liste toda a frota em `GET /veiculos/todos` ou busque um veículo específico por ID em `GET /buscar/:identificador`.
+- **Ver Veículos (Público):**
+  - `GET /veiculos/todos`: Lista toda a frota cadastrada.
+  - `GET /buscar/:identificador`: Busca um veículo específico pelo ID.
+  - `GET /veiculos/busca?termo=`: Pesquisa veículos por marca ou modelo (`iLike`) e retorna o total de locações de cada veículo (`COUNT` com `GROUP BY`).
 - **Modificar Veículos (Exige Token de Admin):**
   - `POST /veiculos`: Cadastra novo veículo enviando `marca`, `modelo`, `ano`, `placa` e `valor` (status inicia como `disponível`).
   - `PUT /atualizar/:id`: Atualiza dados ou valor da diária de um veículo.
@@ -106,7 +109,9 @@ O servidor estará ativo em `http://localhost:3000` (painel web) e `http://local
 - **Consultar Seguro (Exige Token — Dono ou Admin):** `GET /seguros/:identificador` exibe os detalhes de uma apólice pelo ID.
 - **Editar Seguro (Exige Token de Admin):** `PUT /seguros/:id` atualiza tipo, valor ou status do seguro.
 - **Cancelar Seguro (Exige Token de Admin):** `PATCH /seguros/cancelar/:id` altera o status da apólice para `inativo`.
-- **Relatório de Seguros Ativos (Exige Token de Admin):** `GET /seguro/relatorio` utiliza função de agregação (`COUNT`) para retornar a quantidade total de seguros ativos.
+- **Relatórios de Seguros (Exige Token de Admin):**
+  - `GET /seguro/relatorio`: Retorna a quantidade total de seguros ativos (`COUNT`).
+  - `GET /seguro/relatorio/tipos`: Agrupa os seguros ativos por `tipo_seguro` (`GROUP BY`), exibindo contagem, soma total, menor e maior valor (`COUNT`, `SUM`, `MIN`, `MAX`).
 
 ### 8. Registrar Pagamentos (Integrais ou Divididos)
 - **Registrar Pagamento (Exige Token — Dono do aluguel ou Admin):** `POST /pagamentos` enviando `rental_id`, `valor`, `data` e `metodo_pagamento` (`PIX`, `Cartão de Crédito`, `Cartão de Débito` ou `Dinheiro`).
