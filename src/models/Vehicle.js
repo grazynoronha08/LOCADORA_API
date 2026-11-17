@@ -40,5 +40,10 @@ class Vehicle extends Model {
 
             { sequelize })
     }
+
+    static associate(models) {
+    this.hasMany(models.Rental, {foreignKey: 'veiculo_id', as: 'rentals',});
+  }
+
 }
 export default Vehicle

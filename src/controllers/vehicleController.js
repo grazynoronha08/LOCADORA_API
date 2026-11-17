@@ -52,7 +52,7 @@ class VehicleController {
 
     async search(req, res) {
         try {
-        const { termo } = req.query; // Ex: /veiculos/busca?termo=Toyota
+        const { termo } = req.query; 
 
         const vehicles = await Vehicle.findAll({
             where: {

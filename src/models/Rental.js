@@ -32,7 +32,7 @@ class Rental extends Model {
 
 
     static associate(models) {
-        // Um Aluguel pertence a um Usuário (Cliente)
+        // Um Aluguel pertence a um Usuário 
         this.belongsTo(models.User, { foreignKey: 'usuario_id', as: 'cliente' });
 
         // Um Aluguel pertence a um Veículo
