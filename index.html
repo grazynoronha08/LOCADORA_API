@@ -1014,7 +1014,7 @@
 
     function searchVehicleByTerm() {
       const termo = encodeURIComponent(document.getElementById('searchVehicleTermo').value);
-      apiRequest('GET', `/veiculos/busca?termo=${termo}`);
+      apiRequest('GET', `/veiculos/busca/${termo}`);
     }
 
     function createVehicle() {
