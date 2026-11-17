@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Locadora API",
-    "description": "Documentação da API de Gestão e Aluguel de Veículos — com autenticação JWT, controle de acesso (Admin/Cliente), pagamentos parciais/divididos e seguros.",
+    "description": "Documentação completa das 26 rotas da API de Gestão e Aluguel de Veículos — com autenticação JWT, controle de acesso (Admin/Cliente), busca agregada, pagamentos integrais ou divididos e seguros.",
     "version": "1.0.0"
   },
   "host": "locadora-api-k59p.onrender.com",
@@ -25,7 +25,7 @@
     },
     {
       "name": "Veículos",
-      "description": "Consulta pública e gerenciamento administrativo da frota"
+      "description": "Consulta pública, busca filtrada e gerenciamento administrativo da frota"
     },
     {
       "name": "Aluguéis",
@@ -33,18 +33,18 @@
     },
     {
       "name": "Pagamentos",
-      "description": "Quitação integral ou dividida, estorno e relatório SQL (JOIN)"
+      "description": "Quitação integral ou dividida, estorno e relatório SQL (INNER JOIN)"
     },
     {
       "name": "Seguros",
-      "description": "Contratação, consulta, cancelamento e relatório de apólices ativas"
+      "description": "Contratação, consulta, cancelamento e relatórios gerenciais de apólices"
     }
   ],
   "paths": {
     "/cadastro/administrador": {
       "post": {
         "tags": ["Usuários"],
-        "summary": "Cadastrar novo administrador",
+        "summary": "Cadastrar novo administrador (Público)",
         "description": "Cria um usuário com permissão administrativa (is_admin: true).",
         "parameters": [
           {
@@ -57,19 +57,19 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": "Grazielly Noronha Sousa"
+                  "example": "Nome do Administrador"
                 },
                 "age": {
                   "type": "integer",
-                  "example": 20
+                  "example": 25
                 },
                 "email": {
                   "type": "string",
-                  "example": "admin@locadora.com"
+                  "example": "admin@exemplo.com"
                 },
                 "password": {
                   "type": "string",
-                  "example": "123456"
+                  "example": "sua_senha_segura"
                 }
               }
             }
@@ -109,11 +109,11 @@
                 },
                 "email": {
                   "type": "string",
-                  "example": "pedro@locadora.com"
+                  "example": "cliente@exemplo.com"
                 },
                 "password": {
                   "type": "string",
-                  "example": "123456"
+                  "example": "sua_senha_segura"
                 }
               }
             }
@@ -145,11 +145,11 @@
               "properties": {
                 "email": {
                   "type": "string",
-                  "example": "grazynoronha08@alu.ufc.br"
+                  "example": "usuario@exemplo.com"
                 },
                 "password": {
                   "type": "string",
-                  "example": "123456"
+                  "example": "sua_senha"
                 }
               }
             }
@@ -239,7 +239,7 @@
       "post": {
         "tags": ["Veículos"],
         "summary": "Cadastrar novo veículo (Apenas Admin)",
-        "description": "Adiciona um novo veículo à frota da locadora.",
+        "description": "Adiciona um novo veículo à frota da locadora com status inicial 'disponível'.",
         "security": [
           {
             "Bearer": []
@@ -424,15 +424,15 @@
     "/buscar/{identificador}": {
       "get": {
         "tags": ["Veículos"],
-        "summary": "Buscar veículo por ID, marca ou modelo (Público)",
-        "description": "Consulta um veículo específico pelo identificador informado na URL.",
+        "summary": "Buscar veículo por ID (Público)",
+        "description": "Consulta um veículo específico pelo ID informado na URL.",
         "parameters": [
           {
             "name": "identificador",
             "in": "path",
             "required": true,
-            "type": "string",
-            "example": "Corolla"
+            "type": "integer",
+            "example": 1
           }
         ],
         "responses": {
@@ -448,11 +448,36 @@
         }
       }
     },
+    "/veiculos/busca": {
+      "get": {
+        "tags": ["Veículos"],
+        "summary": "Pesquisar veículos por marca ou modelo com contagem de locações (Público)",
+        "description": "Filtra veículos por termo (iLike em marca e modelo) e retorna a contagem de locações (COUNT + GROUP BY) de cada veículo.",
+        "parameters": [
+          {
+            "name": "termo",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Termo de busca (marca ou modelo)",
+            "example": "Honda"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de veículos encontrados com total_locacoes"
+          },
+          "500": {
+            "description": "Erro ao buscar veículos"
+          }
+        }
+      }
+    },
     "/alugar": {
       "post": {
         "tags": ["Aluguéis"],
         "summary": "Registrar novo aluguel (Usuário Logado)",
-        "description": "Cria uma locação vinculando um usuário a um veículo no período informado.",
+        "description": "Cria uma locação vinculando um usuário a um veículo no período informado e altera o status do veículo para 'alugado'.",
         "security": [
           {
             "Bearer": []
@@ -477,11 +502,11 @@
                 },
                 "data_inicio": {
                   "type": "string",
-                  "example": "2026-11-15"
+                  "example": "2026-11-16"
                 },
                 "data_fim": {
                   "type": "string",
-                  "example": "2026-11-18"
+                  "example": "2026-11-19"
                 }
               }
             }
@@ -536,7 +561,7 @@
       "delete": {
         "tags": ["Aluguéis"],
         "summary": "Cancelar aluguel (Dono do aluguel ou Admin)",
-        "description": "Cancela um aluguel existente, permitindo ação apenas ao cliente titular ou a um administrador.",
+        "description": "Cancela um aluguel existente e devolve o veículo para status 'disponível'.",
         "security": [
           {
             "Bearer": []
@@ -625,7 +650,7 @@
                 },
                 "data": {
                   "type": "string",
-                  "example": "2026-11-15"
+                  "example": "2026-11-16"
                 },
                 "metodo_pagamento": {
                   "type": "string",
@@ -655,7 +680,7 @@
         }
       }
     },
-    "/pagamentos/listar": {
+    "/pagamentos/todos": {
       "get": {
         "tags": ["Pagamentos"],
         "summary": "Listar todos os pagamentos (Apenas Admin)",
@@ -748,7 +773,7 @@
                 },
                 "data": {
                   "type": "string",
-                  "example": "2026-11-01"
+                  "example": "2026-11-16"
                 },
                 "metodo_pagamento": {
                   "type": "string",
@@ -813,7 +838,7 @@
         }
       }
     },
-    "/seguros/relatorio": {
+    "/seguro/relatorio": {
       "get": {
         "tags": ["Seguros"],
         "summary": "Relatório de seguros ativos (COUNT) (Apenas Admin)",
@@ -835,6 +860,32 @@
           },
           "500": {
             "description": "Erro interno no servidor"
+          }
+        }
+      }
+    },
+    "/seguro/relatorio/tipos": {
+      "get": {
+        "tags": ["Seguros"],
+        "summary": "Relatório de seguros ativos agrupados por tipo (GROUP BY) (Apenas Admin)",
+        "description": "Agrupa as apólices ativas por tipo_seguro e calcula COUNT, SUM, MIN e MAX dos valores.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Estatísticas agrupadas por tipo_seguro"
+          },
+          "401": {
+            "description": "Não autenticado"
+          },
+          "403": {
+            "description": "Acesso negado (requer Admin)"
+          },
+          "500": {
+            "description": "Erro ao gerar relatório por tipo"
           }
         }
       }
@@ -998,7 +1049,7 @@
     "/seguros/cancelar/{id}": {
       "patch": {
         "tags": ["Seguros"],
-        "summary": "Cancelar seguro (Dono do aluguel ou Admin)",
+        "summary": "Cancelar seguro (Apenas Admin)",
         "description": "Altera o status da apólice para 'inativo'.",
         "security": [
           {
@@ -1022,7 +1073,7 @@
             "description": "Não autenticado"
           },
           "403": {
-            "description": "Acesso negado"
+            "description": "Acesso negado (requer Admin)"
           },
           "404": {
             "description": "Seguro não encontrado"
